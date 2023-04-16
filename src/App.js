@@ -1,25 +1,67 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useContext, useState } from 'react'
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import Layout from "./Common/Layout/Layout";
+import Login from "./Components/Login/Login";
+import { Dashboard } from "./Components/Dashboard/Dashboard";
+import { fakeAuthProvider } from './fakeAuthProvider';
+import { Home } from './Components/Home/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  let [user, setUser] = useState(null);
+
+  let signin = (newUser, callback) => {
+    return fakeAuthProvider.signin(() => {
+      setUser(newUser);
+      callback();
+    });
+  };
+
+  let signout = (callback) => {
+    return fakeAuthProvider.signout(() => {
+      setUser(null);
+      callback();
+    });
+  };
+
+  let value = { user, signin, signout };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export default App;
+export function useAuth() {
+  return useContext(AuthContext);
+}
+
+export function RequireAuth({ children }) {
+  let auth = useAuth();
+  let location = useLocation();
+
+  if (!auth.user) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  return children;
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/:home?" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+        </Route>
+      </Routes>
+    </AuthProvider>
+  )
+}

@@ -1,0 +1,17 @@
+
+  .homepage p {
+      text-align: center;
+  }
+  .loginBtn {
+      cursor: pointer;
+      font-size: 15px;
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      width: 90%;
+    }
+    
+    .loginBtn:hover {
+      background: #474747;
+    }

@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+Project plan
+- Apply the requirements into a wireframe to visualize the user login journey.
+- Slice the requirements into individual stories or tasks. 
+- Initiate the project with react and react router.
+- Build the files architecture, and setup routes.
+- Develop layout page.
+- Develop a login page.
+- Apply route logic for login and logout.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Dependencies 
+-I only used the react router as an external package, I chose it because it is the most common best practice to be used for client side routes without page refresh.
 
-## Available Scripts
+State management
+- I used useContext to store the user authentication and I wrapped the entire route with AuthProvider which provides fake authentication signin and signout api.
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Logic
+- In the App.js I wrapped the route/page (Dashboard) that the user needs to login, with the RequireAuth function that will save the current location/page and check if the user is authenticated and redirecting to the desired new page which is Dashboard.
+- I created 3 pages 
+  - Layout as a parent component that hold children components such as home and dashboard. And it contains basic header and body, 
+  - Home where regular user can login and falls into default page, 
+  - Login where added a logic to handle user input, errors/validation, and submit form logics.
+  - Dashboard where logged in user lands and with ability to logout by removing the user session and redirect back to home page.
